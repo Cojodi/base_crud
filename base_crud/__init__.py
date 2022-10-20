@@ -50,7 +50,10 @@ class BaseCRUD(Base):
     def __init__(self, db, Table):
         super().__init__(db, Table)
 
-    def create(self, *, orm: Optional[SQLModel] = None, **kwargs):
+    def create(self, *_, orm: Optional[SQLModel] = None, **kwargs):
+        if _:
+            raise ValueError("Only kwargs allowed")
+
         if orm is not None:
             kwargs.update(orm.dict())
 
@@ -64,18 +67,30 @@ class BaseCRUD(Base):
         raise NotImplementedError()
 
     # o is an obj type self.Table
-    def update(self, o, *, orm: Optional[SQLModel] = None, **kwargs):
+    def update(self, o, *_, orm: Optional[SQLModel] = None, **kwargs):
+        if _:
+            raise ValueError("Only kwargs allowed")
+
         return o.update(orm, **kwargs)
 
-    def first(self, *, order_by=[], **kwargs):
+    def first(self, *_, order_by=[], **kwargs):
+        if _:
+            raise ValueError("Only kwargs allowed")
+
         q = self.build_q(kwargs, order_by)
         return self.db.exec(q).first()
 
-    def one(self, *, order_by=[], **kwargs):
+    def one(self, *_, order_by=[], **kwargs):
+        if _:
+            raise ValueError("Only kwargs allowed")
+
         q = self.build_q(kwargs, order_by)
         return self.db.exec(q).one()
 
-    def all(self, *, order_by=[], **kwargs):
+    def all(self, *_, order_by=[], **kwargs):
+        if _:
+            raise ValueError("Only kwargs allowed")
+
         q = self.build_q(kwargs, order_by)
         return self.db.exec(q).all()
 
@@ -84,17 +99,29 @@ class AsyncBaseCRUD(BaseCRUD):
     def __init__(self, db, Table):
         super().__init__(db, Table)
 
-    async def first(self, *, order_by=[], **kwargs):
+    async def first(self, *_, order_by=[], **kwargs):
+        if _:
+            raise ValueError("Only kwargs allowed")
+
         q = self.build_q(kwargs, order_by)
         return (await self.db.exec(q)).first()
 
-    async def one(self, *, order_by=[], **kwargs):
+    async def one(self, *_, order_by=[], **kwargs):
+        if _:
+            raise ValueError("Only kwargs allowed")
+
         q = self.build_q(kwargs, order_by)
         return (await self.db.exec(q)).one()
 
-    async def all(self, *, order_by=[], **kwargs):
+    async def all(self, *_, order_by=[], **kwargs):
+        if _:
+            raise ValueError("Only kwargs allowed")
+
         q = self.build_q(kwargs, order_by)
         return (await self.db.exec(q)).all()
 
-    async def get_else_create(self, *, orm: SQLModel = None, **kwargs):
+    async def get_else_create(self, *_, orm: SQLModel = None, **kwargs):
+        if _:
+            raise ValueError("Only kwargs allowed")
+
         raise NotImplementedError()
