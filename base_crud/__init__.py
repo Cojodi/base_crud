@@ -50,7 +50,7 @@ class BaseCRUD(Base):
     def __init__(self, db, Table):
         super().__init__(db, Table)
 
-    def create(self, *_, orm: Optional[SQLModel] = None, **kwargs):
+    def create(self, *_, orm: Optional[SQLModel] = None, add_session=True, **kwargs):
         if _:
             raise ValueError("Only kwargs allowed")
 
@@ -59,7 +59,8 @@ class BaseCRUD(Base):
 
         o = self.Table(**kwargs)
 
-        self.db.add(o)
+        if add_session:
+            self.db.add(o)
 
         return o
 
